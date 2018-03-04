@@ -1,0 +1,304 @@
+	
+Telnet
+From Wikipedia, the free encyclopedia
+Not to be confused with Telenet.
+	This article needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed. (April 2014) (Learn how and when to remove this template message)
+
+Telnet is a protocol used on the Internet or local area networks to provide a bidirectional interactive text-oriented communication facility using a virtual terminal connection. User data is interspersed in-band with Telnet control information in an 8-bit byte oriented data connection over the Transmission Control Protocol (TCP).
+
+Telnet was developed in 1969 beginning with RFC 15, extended in RFC 854, and standardized as Internet Engineering Task Force (IETF) Internet Standard STD 8, one of the first Internet standards. The name stands for "teletype network".[1][2]
+
+Historically, Telnet provided access to a command-line interface (usually, of an operating system) on a remote host, including most network equipment and operating systems with a configuration utility (including systems based on Windows NT).[clarification needed] However, because of serious security concerns when using Telnet over an open network such as the Internet, its use for this purpose has waned significantly in favor of SSH.
+
+The term telnet is also used to refer to the software that implements the client part of the protocol. Telnet client applications are available for virtually all computer platforms. Telnet is also used as a verb. To telnet means to establish a connection using the Telnet protocol, either with command line client or with a programmatic interface. For example, a common directive might be: "To change your password, telnet into the server, log in and run the passwd command." Most often, a user will be telnetting to a Unix-like server system or a network device (such as a router) and obtaining a login prompt to a command line text interface or a character-based full-screen manager.
+Internet protocol suite
+Application layer
+
+    BGP DHCP DNS FTP HTTP IMAP LDAP MGCP NNTP NTP POP ONC/RPC RTP RTSP RIP SIP SMTP SNMP SSH Telnet TLS/SSL XMPP more... 
+
+Transport layer
+
+    TCP UDP DCCP SCTP RSVP more... 
+
+Internet layer
+
+    IP
+        IPv4 IPv6 ICMP ICMPv6 ECN IGMP IPsec more... 
+
+Link layer
+
+    ARP NDP OSPF Tunnels
+        L2TP PPP MAC
+        Ethernet DSL ISDN FDDI more... 
+
+    v t e 
+
+Contents
+
+    1 History and standards
+    2 Security
+    3 Telnet 5250
+    4 Telnet data
+    5 Related RFCs
+        5.1 Internet Standards
+        5.2 Proposed Standards
+        5.3 Informational/experimental
+        5.4 Other RFCs
+    6 Telnet clients
+    7 See also
+    8 References
+    9 External links
+
+History and standards
+
+Telnet is a client-server protocol, based on a reliable connection-oriented transport. Typically, this protocol is used to establish a connection to Transmission Control Protocol (TCP) port number 23, where a Telnet server application (telnetd) is listening. Telnet, however, predates TCP/IP and was originally run over Network Control Program (NCP) protocols.
+
+Even though Telnet was an ad hoc protocol with no official definition until March 5, 1973,[3] the name actually referred to Teletype Over Network Protocol as the RFC 206 (NIC 7176) on Telnet makes the connection clear:[4]
+
+    The TELNET protocol is based upon the notion of a virtual teletype, employing a 7-bit ASCII character set. The primary function of a User TELNET, then, is to provide the means by which its users can 'hit' all the keys on that virtual teletype.[5]
+
+Essentially, it used an 8-bit channel to exchange 7-bit ASCII data. Any byte with the high bit set was a special Telnet character. On March 5, 1973, a Telnet protocol standard was defined at UCLA[6] with the publication of two NIC documents: Telnet Protocol Specification, NIC 15372, and Telnet Option Specifications, NIC 15373.
+
+Many extensions were made for Telnet because of its negotiable options protocol architecture. Some of these extensions have been adopted as Internet standards, IETF documents STD 27 through STD 32. Some extensions have been widely implemented and others are proposed standards on the IETF standards track (see below) Telnet is best understood in the context of a user with a simple terminal using the local Telnet program (known as the client program) to run a logon session on a remote computer where the user's communications needs are handled by a Telnet server program.
+Security
+	This section does not cite any sources. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (April 2010) (Learn how and when to remove this template message)
+
+When Telnet was initially developed in 1969, most users of networked computers were in the computer departments of academic institutions, or at large private and government research facilities. In this environment, security was not nearly as much a concern as it became after the bandwidth explosion of the 1990s. The rise in the number of people with access to the Internet, and by extension the number of people attempting to hack other people's servers, made encrypted alternatives necessary.
+
+Experts in computer security, such as SANS Institute, recommend that the use of Telnet for remote logins should be discontinued under all normal circumstances, for the following reasons:
+
+    Telnet, by default, does not encrypt any data sent over the connection (including passwords), and so it is often feasible to eavesdrop on the communications and use the password later for malicious purposes; anybody who has access to a router, switch, hub or gateway located on the network between the two hosts where Telnet is being used can intercept the packets passing by and obtain login, password and whatever else is typed with a packet analyzer.
+    Most implementations of Telnet have no authentication that would ensure communication is carried out between the two desired hosts and not intercepted in the middle.
+    Several vulnerabilities have been discovered over the years in commonly used Telnet daemons.
+
+These security-related shortcomings have seen the usage of the Telnet protocol drop rapidly,[7] especially on the public Internet, in favor of the Secure Shell (SSH) protocol, first released in 1995. SSH has practically replaced Telnet, and the older protocol is used these days only in rare cases to access decades old legacy equipment that does not support more modern protocols.[8] SSH provides much of the functionality of telnet, with the addition of strong encryption to prevent sensitive data such as passwords from being intercepted, and public key authentication, to ensure that the remote computer is actually who it claims to be. As has happened with other early Internet protocols, extensions to the Telnet protocol provide Transport Layer Security (TLS) security and Simple Authentication and Security Layer (SASL) authentication that address the above concerns. However, most Telnet implementations do not support these extensions; and there has been relatively little interest in implementing these as SSH is adequate for most purposes.
+
+It is of note that there are a large number of industrial and scientific devices which have only Telnet available as a communication option. Some are built with only a standard RS-232 port and use a serial server hardware appliance to provide the translation between the TCP/Telnet data and the RS-232 serial data. In such cases, SSH is not an option unless the interface appliance can be configured for SSH.
+Telnet 5250
+
+IBM 5250 or 3270 workstation emulation is supported via custom telnet clients, TN5250/TN3270, and IBM servers. Clients and servers designed to pass IBM 5250 data streams over Telnet generally do support SSL encryption, as SSH does not include 5250 emulation. Under OS/400 (also known as IBM i), port 992 is the default port for secured telnet.[9]
+Telnet data
+
+All data octets except 0xff are transmitted over Telnet as is. (0xff, or 255 in decimal, is the IAC byte (Interpret As Command) which signals that the next byte is a telnet command. The command to insert 0xff into the stream is 0xff, so 0xff need to be escaped by doubling it when sending data over the telnet protocol.) Therefore, a Telnet client application may also be used to establish an interactive raw TCP session, and it is commonly believed that such session which does not use the IAC is functionally identical.[citation needed] This is not the case, however, because there are other network virtual terminal (NVT) rules, such as the requirement for a bare carriage return character (CR, ASCII 13) to be followed by a NUL (ASCII 0) character, that distinguish the telnet protocol from raw TCP sessions.[clarification needed] On the other hand, many systems now possess true raw TCP clients, such as netcat or socat on UNIX and PuTTY on Windows, which also can be used to manually "talk" to other services without specialized client software. Nevertheless, Telnet is still sometimes used in debugging network services such as SMTP, IRC, HTTP, FTP or POP3 servers, to issue commands to a server and examine the responses, but of all these protocols only FTP really uses Telnet data format.
+
+Another difference of Telnet from a raw TCP session is that Telnet is not 8-bit clean by default. 8-bit mode may be negotiated, but high-bit-set octets may be garbled until this mode was requested, and it obviously will not be requested in non-Telnet connection. The 8-bit mode (so named binary option) is intended to transmit binary data, not characters though. The standard suggests the interpretation of codes 0000–0176 as ASCII, but does not offer any meaning for high-bit-set data octets. There was an attempt to introduce a switchable character encoding support like HTTP has,[10] but nothing is known about its actual software support.
+Related RFCs
+Internet Standards
+
+    RFC 854, Telnet Protocol Specification
+    RFC 855, Telnet Option Specifications
+    RFC 856, Telnet Binary Transmission
+    RFC 857, Telnet Echo Option
+    RFC 858, Telnet Suppress Go Ahead Option
+    RFC 859, Telnet Status Option
+    RFC 860, Telnet Timing Mark Option
+    RFC 861, Telnet Extended Options: List Option
+
+Proposed Standards
+
+    RFC 885, Telnet end of record option
+    RFC 1073, Telnet Window Size Option
+    RFC 1079, Telnet terminal speed option
+    RFC 1091, Telnet terminal-type option
+    RFC 1096, Telnet X display location option
+    RFC 1123, Requirements for Internet Hosts - Application and Support
+    RFC 1184, Telnet Linemode Option
+    RFC 1372, Telnet Remote Flow Control Option
+    RFC 1572, Telnet Environment Option
+    RFC 2941, Telnet Authentication Option
+    RFC 2942, Telnet Authentication: Kerberos Version 5
+    RFC 2943, TELNET Authentication Using DSA
+    RFC 2944, Telnet Authentication: SRP
+    RFC 2946, Telnet Data Encryption Option
+    RFC 4248, The telnet URI Scheme
+
+Informational/experimental
+
+    RFC 1143, The Q Method of Implementing TELNET Option Negotiation
+    RFC 1571, Telnet Environment Option Interoperability Issues
+
+Other RFCs
+
+    RFC 1041, Telnet 3270 regime option
+    RFC 1205, 5250 Telnet interface
+    RFC 2217, Telnet Com Port Control Option
+    RFC 4777, IBM's iSeries Telnet Enhancements
+
+Telnet clients
+
+    PuTTY is a free, open-source SSH, Telnet, rlogin, and raw TCP client for Windows, Linux, and Unix.
+    AbsoluteTelnet is a telnet client for Windows. It also supports SSH and SFTP,
+    RUMBA (Terminal Emulator)
+    Line Mode Browser, a command line web browser
+    NCSA Telnet
+    TeraTerm
+    SecureCRT from Van Dyke Software
+    ZOC Terminal
+    SyncTERM BBS terminal program supporting Telnet, SSHv2, RLogin, Serial, Windows, *nix, and Mac OS X platforms, X/Y/ZMODEM and various BBS terminal emulations
+    NetRunner BBS telnet client for ANSI-BBS. Uses a modern SDL2-based emulation engine to provide very accurate and clear emulation of DOS and Amiga systems. Available for Linux and Windows.
+    PowerTerm InterConnect from Ericom available for Windows, Mac OS X, Linux, Windows CE and supports 35 terminal emulation types including TN3270, TN5250, VT420, Wyse and others with SSH and SSL.
+    Rtelnet is a SOCKS client version of Telnet, providing similar functionality of telnet to those hosts which are behind firewall and NAT.
+    Inetutils includes a telnet client and server and is installed by default on many GNU/Linux distributions.
+
+See also
+
+    Virtual terminal
+    Reverse telnet
+    HyTelnet
+    Kermit
+    SSH
+
+References
+
+Andrew Wheen. Dot-dash to Dot.Com: How Modern Telecommunications Evolved from the Telegraph to the Internet. Springer, 2011. p. 132. ISBN 9781441967596.
+Christoph Meinel; Harald Sack. Internetworking: Technological Foundations and Applications. X.media.publishing, 2013. p. 57. ISBN 3642353916.
+RFC 318 — documentation of old ad hoc telnet protocol
+Garth O. Bruen. WHOIS Running the Internet: Protocol, Policy, and Privacy. Wiley, 1st edition (November 2, 2015). p. 25. ISBN 9781118679555.
+The RFC 206 (NIC 7176), 9 August 1971; Computer Research Lab, UCSB; J. White.
+RFC 495 — announcement of Telnet protocol
+Poulsen, Kevin (2 April 2007). "Telnet, dead at 35...RIP". Wired. April 2007 (2007-04): 24. Retrieved 14 June 2017.
+Ylonen, Tatu. "History of the SSH Protocol". SSH home page. SSH Communications Security, Inc. Retrieved 14 June 2017.
+"IBM TCP/IP Ports Required for Access for Windows and Related Functions - United States". www-01.ibm.com. IBM Technote.
+
+    RFC 2066 — TELNET CHARSET Option
+
+External links
+
+    Telnet Options — the official list of assigned option numbers at iana.org
+    Telnet Interactions Described as a Sequence Diagram
+    Telnet protocol description, with NVT reference
+    Microsoft TechNet:Telnet commands
+    TELNET: The Mother of All (Application) Protocols
+    Troubleshoot Telnet Errors in Windows Operating System
+
+Categories:
+
+    Application layer protocolsClear text protocolsComputer-related introductions in 1969History of the InternetInternet Protocol based network softwareInternet protocolsInternet StandardsRemote administration softwareUnix network-related softwareURI schemes
+
+Navigation menu
+
+    Not logged in
+    Talk
+    Contributions
+    Create account
+    Log in
+
+    Article
+    Talk
+
+    Read
+    Edit
+    View history
+
+Search
+
+    Main page
+    Contents
+    Featured content
+    Current events
+    Random article
+    Donate to Wikipedia
+    Wikipedia store
+
+Interaction
+
+    Help
+    About Wikipedia
+    Community portal
+    Recent changes
+    Contact page
+
+Tools
+
+    What links here
+    Related changes
+    Upload file
+    Special pages
+    Permanent link
+    Page information
+    Wikidata item
+    Cite this page
+
+Print/export
+
+    Create a book
+    Download as PDF
+    Printable version
+
+In other projects
+
+    Wikimedia Commons
+
+Languages
+
+    Afrikaans
+    العربية
+    Azərbaycanca
+    Български
+    Bosanski
+    Català
+    Čeština
+    Dansk
+    Deutsch
+    Eesti
+    Ελληνικά
+    Español
+    Esperanto
+    Euskara
+    فارسی
+    Français
+    Gaeilge
+    Galego
+    한국어
+    हिन्दी
+    Hrvatski
+    Bahasa Indonesia
+    Italiano
+    עברית
+    ქართული
+    Kurdî
+    Latviešu
+    Magyar
+    Македонски
+    മലയാളം
+    Монгол
+    Nederlands
+    日本語
+    Norsk
+    Polski
+    Português
+    Română
+    Русский
+    Scots
+    Shqip
+    Simple English
+    Slovenčina
+    Slovenščina
+    Српски / srpski
+    Srpskohrvatski / српскохрватски
+    Suomi
+    Svenska
+    தமிழ்
+    ไทย
+    Türkçe
+    Українська
+    Tiếng Việt
+    Yorùbá
+    中文
+
+Edit links
+
+    This page was last edited on 26 August 2017, at 07:13.
+    Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply. By using this site, you agree to the Terms of Use and Privacy Policy. Wikipedia® is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.
+
+    Privacy policy
+    About Wikipedia
+    Disclaimers
+    Contact Wikipedia
+    Developers
+    Cookie statement
+    Mobile view
+
+    Wikimedia Foundation	
+    Powered by MediaWiki	
+
